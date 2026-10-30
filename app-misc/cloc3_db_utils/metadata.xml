@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>ziapannocchia@gmail.com</email>
+		<name>cloc3</name>
+		<description>procedura sql di partizionamento dinamico, generalizzato per una tabella e per un database arbitrari.</description>
+		<description lang="it">vu vu vu gentù mi piaci tu</description>
+	</maintainer>  
+	<upstream>
+		<changelog></changelog>
+	</upstream>
+</pkgmetadata>

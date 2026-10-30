@@ -1,0 +1,25 @@
+#!/sbin/openrc-run
+# Copyright 1999-2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+# Descrizione del servizio
+description="Reverse SSH Tunnel per MariaDB verso Arducloc"
+
+# Se esiste una configurazione locale privata, la carichiamo sovrascrivendo i valori di default
+if [ -f /etc/conf.d/mariadb-tunnel.local ]; then
+    . /etc/conf.d/mariadb-tunnel.local
+fi
+
+# Diciamo a OpenRC di usare il supervisore nativo
+supervisor="supervise-daemon"
+# Opzioni di riavvio
+# --respawn-delay 30  -> Aspetta 30 secondi prima di riavviare (RestartSec=30)
+# Il supervisore di OpenRC di base riavvia sempre (Restart=always)
+# in caso di caduta, chiediamo al supervisore di ripetere i tentativi all'infinito (--respawn-max 0)
+supervise_daemon_args="--respawn-delay 30 --respawn-max 0"
+
+name="mariadb-tunnel"
+command="/usr/bin/ssh"
+command_args="-N -o ExitOnForwardFailure=yes -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -i ${TUNNEL_KEY_PATH} -R ${REMOTE_PORT}:127.0.0.1:22 -R 13306:127.0.0.1:3306 ${TUNNEL_USER}@${TUNNEL_HOST}"
+command_user="${TUNNEL_USER}:${TUNNEL_USER}"
+directory="/home/${TUNNEL_USER}"

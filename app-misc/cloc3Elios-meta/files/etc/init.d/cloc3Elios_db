@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+# Copyright 1999-2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description="script di acquisizione dati fotovoltaico cloc3Elios"
+pidfile="/run/cloc3Elios.pid"
+command="/usr/share/cloc3Elios_db/meta/bin/run_acq.sh"
+
+start() {
+	ebegin "Starting cloc3Elios_db with user ${cloc3EliosUser}" 
+	start-stop-daemon --start --background --make-pidfile \
+			  --pidfile ${pidfile} \
+			  --exec ${command} \
+			  --user ${cloc3EliosUser}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping cloc3Elios_db server"
+	start-stop-daemon --stop --quiet --pidfile ${pidfile}
+	eend $?
+}

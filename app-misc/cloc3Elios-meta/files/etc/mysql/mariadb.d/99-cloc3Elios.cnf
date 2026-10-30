@@ -1,0 +1,33 @@
+[mysqld]
+# Se hai ancora 2GB, usa 512M. Quando passerai a 4GB, potrai salire a 1.5G.
+innodb_buffer_pool_size = 512M
+
+# Riduci i thread di scrittura per non soffocare l'Atom
+innodb_write_io_threads = 2
+innodb_read_io_threads = 2
+
+# Riduciamo la frammentazione del log per non far impazzire il braccetto del disco
+innodb_log_file_size = 128M
+innodb_log_buffer_size = 8M
+
+# Evita che il log cresca troppo
+innodb_log_file_size = 64M
+
+# FONDAMENTALE per dischi lenti: non obblighiamo il disco a confermare ogni 
+# singola scrittura ogni 4 secondi. Scriverà in RAM e scaricherà su disco ogni secondo.
+innodb_flush_log_at_trx_commit = 2
+
+# Ottimizzazione per serie temporali
+innodb_file_per_table = 1
+innodb_stats_on_metadata = 0
+
+#attivazione scheduler per generare in automatico le partizioni delle tabelle dinamiche
+event_scheduler = ON
+#orario UTC
+default-time-zone = '+00:00'
+
+#impostazioni per la replica
+server-id        = 1                  # Identificativo univoco dell'Asrock
+log-bin          = mysql-bin          # Attiva il registro binario
+binlog-do-db     = cloc3Elios_db      # Sincronizza SOLO il database del Cubetto
+expire_logs_days = 7                  # Cancella i vecchi log dopo 7 giorni per non riempire il disco

@@ -1,0 +1,6 @@
+# Configurazione di default (pubblica)
+TUNNEL_USER="tuo-utente"
+TUNNEL_HOST="tuo-host-remoto"
+TUNNEL_KEY_PATH="/home/tuo-utente/.ssh/id_rsa"
+REMOTE_PORT="20002"
+LOCAL_PORT="3306"
